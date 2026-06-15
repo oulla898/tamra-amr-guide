@@ -3,7 +3,7 @@
 The chassis runs ROS 1 with **rosbridge_server** over WebSocket. JSON in, JSON out — any language with a WS lib works. No ROS install needed.
 
 Full topic/service writeup: [`assets/notes/reverse-engineering.md`](assets/notes/reverse-engineering.md).
-Vendor protocol: [`assets/manuals/upper_computer_protocol_translated.pdf`](assets/manuals/upper_computer_protocol_translated.pdf).
+Vendor protocol (the actual API spec, Chinese): [`assets/manuals/upper_computer_protocol_original.pdf`](assets/manuals/upper_computer_protocol_original.pdf). The `_translated.pdf` file with a similar name is actually the chassis hardware manual, not the protocol.
 How we figured it out: [`assets/notes/protocol-analysis-log.md`](assets/notes/protocol-analysis-log.md).
 
 ## Endpoints

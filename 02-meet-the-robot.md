@@ -24,7 +24,7 @@ Dimensions drawing: [`assets/renders/engineering-drawing.png`](assets/renders/en
 
 Differential drive, 2D LiDAR, two depth cameras (up + down), ultrasonics, 24 V battery, x86 ROS 1 PC. Two Ethernet ports — one to the tablet, one spare for your laptop.
 
-Spec: [`assets/manuals/iMRP500_SPEC.pdf`](assets/manuals/iMRP500_SPEC.pdf). Manual: [`assets/manuals/iMRP500_user_manual.pdf`](assets/manuals/iMRP500_user_manual.pdf).
+Spec: [`assets/manuals/iMRP500_SPEC.pdf`](assets/manuals/iMRP500_SPEC.pdf). Datasheet: [`assets/manuals/iMRP500_datasheet.pdf`](assets/manuals/iMRP500_datasheet.pdf). Chassis user manual (machine-translated): [`assets/manuals/upper_computer_protocol_translated.pdf`](assets/manuals/upper_computer_protocol_translated.pdf).
 
 ### Body
 

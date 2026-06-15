@@ -23,10 +23,13 @@ Chapters:
 
 ## Robot manuals — `assets/manuals/`
 
-- [`iMRP500_user_manual.pdf`](assets/manuals/iMRP500_user_manual.pdf) — original Chinese user manual
-- [`iMRP500_SPEC.pdf`](assets/manuals/iMRP500_SPEC.pdf) — spec sheet
-- [`upper_computer_protocol_translated.pdf`](assets/manuals/upper_computer_protocol_translated.pdf) — WebSocket protocol (read this one)
-- [`upper_computer_protocol_original.pdf`](assets/manuals/upper_computer_protocol_original.pdf) — original Chinese
+> **Heads up on filenames.** The vendor's `upper_computer_protocol_translated.pdf` is **not** a translation of the protocol — it's a Google-translated version of the chassis hardware manual. The actual API spec is `upper_computer_protocol_original.pdf` (Chinese).
+
+- [`upper_computer_protocol_original.pdf`](assets/manuals/upper_computer_protocol_original.pdf) — **API spec** (WebSocket / rosbridge protocol, Chinese)
+- [`upper_computer_protocol_translated.pdf`](assets/manuals/upper_computer_protocol_translated.pdf) — Chassis User Manual, machine-translated to English
+- [`iMRP500_datasheet.pdf`](assets/manuals/iMRP500_datasheet.pdf) — datasheet
+- [`iMRP500_SPEC.pdf`](assets/manuals/iMRP500_SPEC.pdf) — short spec sheet
+- [`tablet-spec.docx`](assets/manuals/tablet-spec.docx) / [`tablet-spec-english.docx`](assets/manuals/tablet-spec-english.docx) — RK3566 tablet spec
 
 ## Reverse-engineering notes — `assets/notes/`
 

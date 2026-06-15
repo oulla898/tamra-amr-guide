@@ -10,10 +10,10 @@ If you're writing software for the robot, you don't need to read most of this gu
 
 | What | Why |
 |---|---|
-| 📗 [Protocol — English](assets/manuals/upper_computer_protocol_translated.pdf) | The official WebSocket API spec. Read this one. |
-| 📕 [Protocol — Original (中文)](assets/manuals/upper_computer_protocol_original.pdf) | The Chinese original, for when the translation is ambiguous. |
-| 🔧 [API summary + reverse-engineering notes](assets/notes/reverse-engineering.md) | Topics, services, code snippets we figured out by probing the live robot. |
-| 📘 [iMRP500 user manual](assets/manuals/iMRP500_user_manual.pdf) | Hardware reference (Chinese). |
+| 📗 [Upper-Computer Protocol (中文)](assets/manuals/upper_computer_protocol_original.pdf) | The actual WebSocket API spec. Chinese, but agents read it fine. |
+| 🔧 [API summary + reverse-engineering notes](assets/notes/reverse-engineering.md) | Our distilled notes: topics, services, code snippets we verified against the live robot. |
+| 📘 [Chassis User Manual (English, machine-translated)](assets/manuals/upper_computer_protocol_translated.pdf) | Hardware reference. Despite the filename, this is the chassis user manual translated by Google, not the protocol. |
+| 📄 [iMRP500 Data Sheet](assets/manuals/iMRP500_datasheet.pdf) | One-page hardware overview. |
 
 For tablet work, also grab the [tablet spec](assets/manuals/tablet-spec.docx). Everything else (ADB, dual-network daemon) is advanced — only when you need it.
 

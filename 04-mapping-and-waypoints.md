@@ -31,7 +31,7 @@ Tap a waypoint → **Go to**. The robot plans, drives, avoids. If stuck, joystic
 
 ## Virtual walls
 
-Draw forbidden zones on the map for stairs, glass, off-limits rooms. Protocol detail in [`assets/manuals/upper_computer_protocol_translated.pdf`](assets/manuals/upper_computer_protocol_translated.pdf).
+Draw forbidden zones on the map for stairs, glass, off-limits rooms. Protocol detail in [`assets/manuals/upper_computer_protocol_original.pdf`](assets/manuals/upper_computer_protocol_original.pdf) (the API spec, in Chinese).
 
 ## Visual labels (advanced)
 
