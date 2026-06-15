@@ -63,6 +63,18 @@
   main { padding: 2.5em 3em; max-width: 100%; overflow-x: hidden; }
   article { max-width: var(--max); margin: 0 auto; }
 
+  .copybar {
+    max-width: var(--max); margin: 0 auto 1.5em; display: flex; justify-content: flex-end;
+  }
+  .copybtn {
+    display: inline-flex; align-items: center; gap: 0.5em;
+    padding: 0.6em 1em; border: 1px solid var(--rule); border-radius: 6px;
+    background: var(--panel); color: var(--ink); font-size: 0.92em; font-weight: 500;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .copybtn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+  .copybtn.copied { background: #2d8c3c; color: white; border-color: #2d8c3c; }
+
   .pager { display: flex; justify-content: space-between; margin-top: 3em; padding-top: 1.5em; border-top: 1px solid var(--rule); }
   .pager a { padding: 0.5em 0.8em; border: 1px solid var(--rule); border-radius: 4px; background: var(--panel); }
   .pager a:hover { background: var(--code-bg); text-decoration: none; }
@@ -101,14 +113,20 @@
       <ol id="nav"></ol>
     </nav>
 
+    <div class="section">Core docs (for AI agents)</div>
+    <div class="links">
+      <a href="assets/manuals/upper_computer_protocol_translated.pdf" target="_blank">📗 Protocol — English</a>
+      <a href="assets/manuals/upper_computer_protocol_original.pdf" target="_blank">📕 Protocol — 中文</a>
+      <a href="assets/notes/reverse-engineering.md" target="_blank">🔧 API summary</a>
+      <a href="assets/manuals/iMRP500_user_manual.pdf" target="_blank">📘 iMRP500 manual</a>
+      <a href="assets/manuals/tablet-spec.docx">📱 Tablet spec</a>
+    </div>
+
     <div class="section">Quick links</div>
     <div class="links">
+      <a href="https://www.youtube.com/watch?v=H_J-rPhog4M" target="_blank">▶ 13-min walkthrough</a>
       <a href="assets/apk/DeploymentTool.apk" download>📱 Vendor APK</a>
       <a href="report/main.pdf" target="_blank">📄 FYP Report (PDF)</a>
-      <a href="https://www.youtube.com/watch?v=H_J-rPhog4M" target="_blank">▶ 13-min walkthrough</a>
-      <a href="assets/manuals/iMRP500_user_manual.pdf" target="_blank">📘 iMRP500 Manual</a>
-      <a href="assets/manuals/upper_computer_protocol_translated.pdf" target="_blank">📗 Protocol (EN)</a>
-      <a href="assets/notes/reverse-engineering.md">🔧 Reverse-eng notes</a>
     </div>
 
     <div class="section">Source</div>
@@ -118,6 +136,11 @@
   </aside>
 
   <main>
+    <div class="copybar">
+      <button id="copybtn" class="copybtn" title="Copy this page's raw markdown — paste into Claude, ChatGPT, etc.">
+        📋 Copy page (for AI)
+      </button>
+    </div>
     <article id="content"><p class="loading">Loading…</p></article>
     <div class="pager" id="pager"></div>
   </main>
@@ -200,6 +223,8 @@
     return tmp.innerHTML;
   }
 
+  let currentMarkdown = '';
+
   async function loadPage(id, anchor) {
     const page = pageById(id);
     const content = document.getElementById('content');
@@ -209,8 +234,10 @@
       const resp = await fetch(page.file);
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       const md = await resp.text();
+      currentMarkdown = md;
       content.innerHTML = rewriteLinks(marked.parse(md), page.file);
     } catch (e) {
+      currentMarkdown = '';
       content.innerHTML = `<h1>Couldn't load <code>${page.file}</code></h1><p>${e.message}</p>`;
     }
 
@@ -238,6 +265,35 @@
 
   document.getElementById('ham').addEventListener('click', () => {
     document.getElementById('side').classList.toggle('open');
+  });
+
+  document.getElementById('copybtn').addEventListener('click', async () => {
+    const btn = document.getElementById('copybtn');
+    if (!currentMarkdown) return;
+    try {
+      await navigator.clipboard.writeText(currentMarkdown);
+      const original = btn.innerHTML;
+      btn.innerHTML = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.classList.remove('copied');
+      }, 1500);
+    } catch (e) {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = currentMarkdown;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.innerHTML = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = '📋 Copy page (for AI)';
+        btn.classList.remove('copied');
+      }, 1500);
+    }
   });
 
   function routeFromHash() {

@@ -1,10 +1,20 @@
 # Videos
 
-## Walkthrough
+## Walkthrough — 13 min
 
-13 min, covers everything you need to know to operate the robot — buttons, cables, tablet, apps, shutdown.
+Everything you need to operate the robot in one video: buttons, cables, tablet, apps, shutdown. If you only watch one thing, watch this.
 
-> **YouTube:** https://www.youtube.com/watch?v=H_J-rPhog4M
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 1.5em 0;">
+  <iframe
+    src="https://www.youtube.com/embed/H_J-rPhog4M"
+    title="TAMRA — 13-minute walkthrough"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 6px;"></iframe>
+</div>
+
+Direct link: <https://www.youtube.com/watch?v=H_J-rPhog4M>
 
 ## Vendor clips
 

@@ -41,6 +41,5 @@ Wooden subframe with acrylic front. 40° top tilt for the tablet. Rear tray lift
 | **ON button** | Top of chassis, at LiDAR level | Turn the robot on |
 | **Kill switch** | Back of body, red mushroom | Free-wheels the motors so you can push it |
 | **Charge port** | Rear of chassis | 24 V charger |
-| **LED strip** | Seam between chassis and body | Power-state indicator |
 
 The main power switch under the chassis is left alone. Use the ON button.
