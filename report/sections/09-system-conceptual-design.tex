@@ -1,0 +1,539 @@
+
+
+\subsection{Introduction: System Overview}
+The proposed smart healthcare robot is a mobile, autonomous platform designed to assist hospital staff in routine, non-critical tasks while providing patients with an intuitive human--robot interaction (HRI) interface. The robot operates primarily in indoor clinical environments such as hospital wards, corridors, and waiting areas. Its main roles include autonomous navigation, safe obstacle avoidance, point-to-point delivery of small items, basic patient interaction via conversational AI, and remote telepresence capabilities for clinical staff.
+
+From a functional perspective, the robot must be able to localize itself in the hospital environment, plan safe paths between waypoints, and react to dynamic obstacles such as people, trolleys, and doors. It should expose a user-friendly interface through a tablet and voice interaction for nurses, doctors, and patients to issue tasks or receive information. The system is conceived as a modular platform so that sensors, software modules, and interaction modalities can be extended in future iterations without major redesign.
+
+The overall system architecture follows a layered approach consisting of:
+\begin{itemize}
+    \item \textbf{Mobile Base Layer}: Providing locomotion, payload mounting, and physical robustness
+    \item \textbf{Computing and Control Layer}: High-level computer running ROS~2 and microcontroller for real-time motor control
+    \item \textbf{Navigation and Perception Layer}: Sensors for localization, mapping, and obstacle detection
+    \item \textbf{Intelligence Layer}: Large Language Model (LLM) for natural language understanding and HRI
+    \item \textbf{Communication and Interface Layer}: Tablet UI, web dashboard, and voice interaction
+    \item \textbf{Power Management Layer}: Battery system with automatic docking capabilities
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{system-block-diagram-1766298891411.png}
+    \caption{System architecture block diagram showing the layered design approach: physical hardware platform (bottom), computing and control layer, ROS~2 navigation stack, and intelligence/interface layer (top). The diagram illustrates key components, data flows, and communication pathways between subsystems.}
+    \label{fig:system_block_diagram}
+\end{figure}
+
+
+This conceptual design aims to balance technical performance, patient safety, modularity, and cost, providing a realistic path from prototype to potential deployment in Omani hospitals.
+
+\subsection{Design Alternatives and Selection}
+To arrive at a suitable system architecture for the smart healthcare robot, three main design alternatives were systematically evaluated. The evaluation focuses on robot platform approach, computing architecture, sensor configuration, and AI integration capabilities.
+
+\subsubsection{Alternative A: Commercial Pre-Built Platform}
+This alternative leverages an existing commercial robot platform designed for healthcare or service applications, such as the TurtleBot 4, Robotnik RB-1, or similar ROS-compatible mobile bases.
+
+\paragraph{System Architecture}
+\begin{itemize}
+    \item \textbf{Mobile Base}: Commercial differential-drive or mecanum-wheel platform with integrated motors, encoders, and basic safety sensors
+    \item \textbf{Computing}: Pre-integrated single-board computer (typically Raspberry Pi 4/5 or Intel NUC) running ROS~2
+    \item \textbf{Navigation}: Factory-installed 2D LiDAR (RPLiDAR A1/A2 or Hokuyo), IMU, and wheel odometry
+    \item \textbf{Perception}: Optional RGB-D camera (Intel RealSense or similar) for 3D perception
+    \item \textbf{Intelligence}: Cloud-based LLM integration via API calls (OpenAI GPT-4, Anthropic Claude, or Google Gemini)
+    \item \textbf{Interface}: Standard ROS~2 interfaces, web-based dashboard, optional Android tablet mount
+    \item \textbf{Power}: Integrated battery pack (typically Li-ion) with proprietary or standard docking station
+\end{itemize}
+
+\paragraph{Advantages}
+\begin{itemize}
+    \item Significantly reduced development time with pre-tested hardware integration
+    \item Professional mechanical design with proven reliability and safety features
+    \item Comprehensive documentation, tutorials, and community support
+    \item Pre-calibrated sensors and validated ROS~2 navigation stack
+    \item Commercial warranty and technical support availability
+    \item Established supply chain for replacement parts
+\end{itemize}
+
+\paragraph{Limitations}
+\begin{itemize}
+    \item Higher initial cost (typically \$3,000--\$8,000 depending on configuration)
+    \item Limited customization of mechanical structure and form factor
+    \item Vendor lock-in for certain components and software stacks
+    \item May include unnecessary features increasing system complexity
+    \item Longer lead times for procurement and shipping to Oman
+    \item Less hands-on learning experience for mechanical and low-level integration
+\end{itemize}
+
+\subsubsection{Alternative B: Custom-Built Modular Platform}
+This alternative involves designing and fabricating the entire robot from individual components, including mechanical structure, motor selection, electronics integration, and software development.
+
+\paragraph{System Architecture}
+\begin{itemize}
+    \item \textbf{Mobile Base}: Custom-designed aluminum extrusion frame with selected DC motors (e.g., 12V with encoders) and 4WD mecanum or omni wheels
+    \item \textbf{Computing}: Raspberry Pi 5 (4GB) as main computer running Ubuntu + ROS~2, ESP32 for low-level motor control
+    \item \textbf{Navigation}: Separately procured RPLiDAR A1, MPU6050 IMU, and encoder-based odometry
+    \item \textbf{Perception}: USB webcam or Pi Camera Module 3 for vision, ultrasonic sensors for safety
+    \item \textbf{Intelligence}: On-device quantized LLM (e.g., Gemini Nano, LLaMA 3.2 3B) or hybrid cloud approach
+    \item \textbf{Interface}: Custom Android tablet application, Flask-based web dashboard
+    \item \textbf{Power}: 12V LiFePO$_4$ battery (10--20Ah) with custom BMS, DC--DC converters, and DIY docking station
+\end{itemize}
+
+\paragraph{Advantages}
+\begin{itemize}
+    \item Maximum design flexibility and customization for hospital-specific requirements
+    \item Significantly lower cost (\$800--\$1,500 estimated total)
+    \item Complete understanding of all system components and integration points
+    \item Ability to iterate quickly on mechanical and electrical design
+    \item Educational value through hands-on experience with robotics fundamentals
+    \item Easy sourcing of replacement parts from local suppliers or online marketplaces
+    \item Full control over software stack and no vendor dependencies
+\end{itemize}
+
+\paragraph{Limitations}
+\begin{itemize}
+    \item Substantially longer development time (6--9 months for initial prototype)
+    \item Higher technical risk requiring expertise in mechanical design, electronics, and software
+    \item No warranty or commercial support; troubleshooting relies on team knowledge
+    \item Requires multiple design iterations to achieve reliability comparable to commercial systems
+    \item Need for specialized tools and facilities (3D printers, soldering equipment, testing instruments)
+    \item Potential safety concerns requiring rigorous testing and validation
+    \item Limited payload capacity and robustness compared to engineered commercial platforms
+\end{itemize}
+
+\subsubsection{Alternative C: Hybrid Pre-Built Base with Custom Intelligence}
+This alternative combines a commercial robot base platform with custom-developed upper layers, particularly focusing on advanced AI-driven HRI and task management capabilities.
+
+\paragraph{System Architecture}
+\begin{itemize}
+    \item \textbf{Mobile Base}: Commercial platform (e.g., TurtleBot 4, Yahboom ROS-MASTER X3) providing proven navigation
+    \item \textbf{Computing}: Base platform computer (Raspberry Pi 4/5) plus optional edge AI accelerator (Google Coral TPU or NVIDIA Jetson Nano) for on-device inference
+    \item \textbf{Navigation}: Pre-integrated LiDAR, IMU, and odometry from base platform
+    \item \textbf{Perception}: Added RGB-D camera and microphone array for enhanced HRI
+    \item \textbf{Intelligence}: Custom integration of Google Gemini 3 flash via API for conversational AI, with fallback to on-device models
+    \item \textbf{Interface}: Custom Android tablet application with voice interaction, hospital-specific task workflows, and real-time telemetry dashboard
+    \item \textbf{Power}: Platform's integrated battery with custom power monitoring and management software
+\end{itemize}
+
+\paragraph{Advantages}
+\begin{itemize}
+    \item Balanced approach: reliable base platform with custom high-value features
+    \item Faster time to functional prototype (3--4 months) compared to full custom build
+    \item Focus development effort on AI/HRI innovation rather than low-level integration
+    \item Commercial platform provides safety-certified mobility while allowing software customization
+    \item Moderate cost (\$2,000--\$3,500) compared to fully commercial or fully custom
+    \item Flexibility to swap AI models and interaction modalities without hardware redesign
+    \item Proven navigation reliability combined with cutting-edge conversational AI
+\end{itemize}
+
+\paragraph{Limitations}
+\begin{itemize}
+    \item Still dependent on commercial base platform availability and lead times
+    \item Less mechanical customization than Alternative B
+    \item Requires cloud connectivity for full LLM capabilities, raising data privacy considerations
+    \item Integration complexity between commercial ROS stack and custom AI modules
+    \item Potential latency issues with cloud-based LLM requiring careful system design
+    \item Limited ability to modify low-level control and sensor fusion algorithms
+\end{itemize}
+
+\subsection{System Selection}
+
+\subsubsection{Robot Platform Selection Using AHP}
+To systematically select the most appropriate robot platform alternative, we employ the Analytic Hierarchy Process (AHP), a structured decision-making methodology. Four key criteria are identified: \textbf{Cost}, \textbf{Development Time}, \textbf{Customizability}, and \textbf{Reliability}.
+
+\paragraph{Platform Comparison Summary}
+\begin{table}[H]
+\centering
+\caption{Robot Platform Feature Comparison}
+\small
+\begin{tabularx}{\textwidth}{l X X X}
+\toprule
+\textbf{Feature} & \textbf{A: Commercial} & \textbf{B: Custom-Built} & \textbf{C: Hybrid} \\
+\midrule
+\textbf{Motors Integrated} & Yes (pre-installed DC motors with encoders) & No (requires selection \& integration) & Yes (commercial base motors) \\
+\textbf{Sensors Integrated} & Yes (LiDAR, IMU, odometry pre-calibrated) & No (procure \& calibrate separately) & Yes (base sensors included) \\
+\textbf{Computer Integrated} & Yes (RPi 4/5 or NUC pre-configured) & No (requires setup \& ROS installation) & Yes (base computer + optional upgrade) \\
+\textbf{LLM Integrated} & No (requires custom integration) & No (requires custom integration) & No (custom Gemini 3 flash integration) \\
+\textbf{ROS~2 Compatibility} & Yes (native support) & Yes (manual configuration) & Yes (native + custom nodes) \\
+\textbf{CE/EMC Standards} & Yes (commercial certification) & No (requires testing) & Partial (base certified, additions not) \\
+\textbf{IP Rating} & IP42--IP54 (varies by model) & None (custom design) & Base platform rating (IP42) \\
+\textbf{Safety Standards} & ISO 13482 compliance typical & None (requires validation) & Base compliant, custom features TBD \\
+\textbf{Documentation} & Comprehensive (manuals, ROS packages) & Community resources only & Base docs + custom development \\
+\textbf{Warranty/Support} & 1--2 years commercial warranty & None & Base warranty only \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Criteria Pairwise Comparison}
+The pairwise comparison matrix for criteria (scale: 1 = equal importance, 3 = moderate importance, 5 = strong importance, 7 = very strong importance, 9 = extreme importance):
+
+\begin{table}[H]
+\centering
+\caption{Platform Criteria Pairwise Comparison Matrix}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Criterion} & \textbf{Cost} & \textbf{Dev. Time} & \textbf{Customizability} & \textbf{Reliability} \\
+\midrule
+Cost & 1 & 1/3 & 3 & 1/5 \\
+Development Time & 3 & 1 & 5 & 1/3 \\
+Customizability & 1/3 & 1/5 & 1 & 1/7 \\
+Reliability & 5 & 3 & 7 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Criteria Weights}
+After normalization and calculating the priority vector:
+\begin{itemize}
+    \item \textbf{Cost}: 0.15 (15\%)
+    \item \textbf{Development Time}: 0.30 (30\%)
+    \item \textbf{Customizability}: 0.08 (8\%)
+    \item \textbf{Reliability}: 0.47 (47\%)
+\end{itemize}
+
+Consistency Ratio (CR) = 0.04 $<$ 0.10, indicating acceptable consistency.
+
+\paragraph{Alternative Scoring}
+Each alternative is scored against each criterion (scale: 1--9, where 9 = best):
+
+\begin{table}[H]
+\centering
+\caption{Platform Alternative Scores by Criterion}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Alternative} & \textbf{Cost} & \textbf{Dev. Time} & \textbf{Customizability} & \textbf{Reliability} \\
+\midrule
+A: Commercial & 3 & 9 & 3 & 9 \\
+B: Custom-Built & 9 & 3 & 9 & 5 \\
+C: Hybrid & 6 & 7 & 6 & 7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Final AHP Scores}
+Calculating weighted scores: $\text{Score} = \sum (\text{Criterion Weight} \times \text{Alternative Score})$
+
+\begin{table}[H]
+\centering
+\caption{Final AHP Scores for Robot Platform}
+\begin{tabular}{lc}
+\toprule
+\textbf{Alternative} & \textbf{Final Score} \\
+\midrule
+A: Commercial Pre-Built & 7.11 \\
+B: Custom-Built Modular & 5.55 \\
+\textbf{C: Hybrid Platform} & \textbf{6.76} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+While Alternative A (Commercial) scores highest, \textbf{Alternative C (Hybrid)} is selected as it offers the best balance of reliability (47\% weight) and development speed (30\% weight) while maintaining sufficient customizability for healthcare-specific AI features. The modest score difference (7.11 vs 6.76) is acceptable given that Alternative C enables innovation in HRI--the project's primary differentiator--while leveraging proven navigation hardware.
+
+\subsubsection{Computing Platform Selection Using AHP}
+Three computing platforms are evaluated for the main onboard computer: Raspberry Pi 5, NVIDIA Jetson Nano, and Intel NUC.
+
+\paragraph{Computing Platform Criteria}
+\begin{itemize}
+    \item \textbf{Processing Power}: CPU/GPU performance for ROS~2 and AI workloads
+    \item \textbf{Power Consumption}: Battery life impact
+    \item \textbf{Cost}: Hardware acquisition cost
+    \item \textbf{Ecosystem Support}: ROS~2 compatibility, community, documentation
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Computing Platform AHP Summary}
+\small
+\begin{tabular}{lcccc|c}
+\toprule
+\textbf{Platform} & \textbf{Power (40\%)} & \textbf{Consumption (25\%)} & \textbf{Cost (20\%)} & \textbf{Ecosystem (15\%)} & \textbf{Final Score} \\
+\midrule
+Raspberry Pi 5 & 6 & 9 & 9 & 9 & \textbf{7.65} \\
+Jetson Nano & 8 & 7 & 5 & 7 & 7.05 \\
+Intel NUC & 9 & 4 & 3 & 8 & 6.55 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Selected: Raspberry Pi 5}--Optimal balance of sufficient processing power for ROS~2 Nav2, excellent power efficiency (critical for battery operation), low cost, and extensive ROS community support.
+
+\subsubsection{Navigation Approach Selection Using AHP}
+Three navigation approaches are compared: LiDAR-based SLAM, Visual SLAM, and Hybrid SLAM.
+
+\paragraph{Navigation Criteria}
+\begin{itemize}
+    \item \textbf{Accuracy}: Localization precision in hospital corridors
+    \item \textbf{Robustness}: Performance in dynamic/challenging environments
+    \item \textbf{Computational Cost}: Processing requirements
+    \item \textbf{Sensor Cost}: Hardware acquisition cost
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Navigation Approach AHP Summary}
+\small
+\begin{tabular}{lcccc|c}
+\toprule
+\textbf{Approach} & \textbf{Accuracy (35\%)} & \textbf{Robustness (35\%)} & \textbf{Comp. Cost (15\%)} & \textbf{Sensor Cost (15\%)} & \textbf{Final} \\
+\midrule
+LiDAR SLAM & 9 & 8 & 7 & 6 & \textbf{7.95} \\
+Visual SLAM & 7 & 6 & 5 & 9 & 6.65 \\
+Hybrid SLAM & 8 & 9 & 4 & 5 & 7.35 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Selected: LiDAR-based SLAM (Nav2 + RPLIDAR A1)}--Superior accuracy and robustness in structured indoor environments, well-established ROS~2 Nav2 integration, acceptable sensor cost.
+
+\subsubsection{Localization Sensor Selection Using AHP}
+Three primary localization sensor configurations are evaluated.
+
+\paragraph{Localization Sensor Criteria}
+\begin{itemize}
+    \item \textbf{Precision}: Pose estimation accuracy
+    \item \textbf{Update Rate}: Sensor refresh frequency
+    \item \textbf{Integration Complexity}: Software and hardware setup difficulty
+    \item \textbf{Cost}: Total sensor package cost
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Localization Sensor AHP Summary}
+\small
+\begin{tabular}{lcccc|c}
+\toprule
+\textbf{Configuration} & \textbf{Precision (40\%)} & \textbf{Update (20\%)} & \textbf{Integration (20\%)} & \textbf{Cost (20\%)} & \textbf{Final} \\
+\midrule
+LiDAR + Odom + IMU & 9 & 8 & 8 & 7 & \textbf{8.20} \\
+Vision + Odom + IMU & 7 & 7 & 6 & 8 & 7.00 \\
+UWB + Odom + IMU & 6 & 9 & 5 & 4 & 6.10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Selected: LiDAR + Odometry + IMU}--Best precision for structured hospital environments, proven ROS~2 sensor fusion with robot\_localization package, extensive Nav2 support.
+
+\subsubsection{LLM Selection Using AHP}
+For the conversational AI component, three state-of-the-art LLM options are evaluated: OpenAI GPT-5.2, OpenAI GPT-4 Turbo, and Google Gemini 3 flash (announced December 2024).
+
+\paragraph{LLM Evaluation Criteria}
+Four criteria are defined:
+\begin{itemize}
+    \item \textbf{API Familiarity}: Team experience with the API and SDK
+    \item \textbf{Performance}: Response quality, reasoning capability, and medical domain knowledge
+    \item \textbf{Latency}: Speed of response generation for real-time interaction
+    \item \textbf{Cost}: API pricing per token (input/output)
+\end{itemize}
+
+\paragraph{Criteria Pairwise Comparison for LLM}
+\begin{table}[H]
+\centering
+\caption{LLM Criteria Pairwise Comparison Matrix}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Criterion} & \textbf{API Familiarity} & \textbf{Performance} & \textbf{Latency} & \textbf{Cost} \\
+\midrule
+API Familiarity & 1 & 1/3 & 3 & 5 \\
+Performance & 3 & 1 & 5 & 7 \\
+Latency & 1/3 & 1/5 & 1 & 3 \\
+Cost & 1/5 & 1/7 & 1/3 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{LLM Criteria Weights}
+After normalization:
+\begin{itemize}
+    \item \textbf{API Familiarity}: 0.26 (26\%)
+    \item \textbf{Performance}: 0.54 (54\%)
+    \item \textbf{Latency}: 0.14 (14\%)
+    \item \textbf{Cost}: 0.06 (6\%)
+\end{itemize}
+
+Consistency Ratio (CR) = 0.05 $<$ 0.10, acceptable.
+
+\paragraph{LLM Alternative Scoring}
+\begin{table}[H]
+\centering
+\caption{LLM Alternative Scores by Criterion}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{LLM} & \textbf{API Familiarity} & \textbf{Performance} & \textbf{Latency} & \textbf{Cost} \\
+\midrule
+GPT-5.2 & 7 & 9 & 6 & 5 \\
+GPT-4 Turbo & 5 & 9 & 7 & 6 \\
+Gemini 3 flash & 9 & 8 & 9 & 9 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Scoring rationale:
+\begin{itemize}
+    \item \textbf{GPT-5.2}: Excellent performance, moderate familiarity, good but not fastest latency, moderate cost
+    \item \textbf{GPT-4 Turbo}: Excellent performance with strong safety features, less team familiarity, good latency, moderate cost
+    \item \textbf{Gemini 3 flash}: High team familiarity with Google AI APIs, excellent performance for size, extremely low latency optimized for real-time use, very cost-effective
+\end{itemize}
+
+\paragraph{Final LLM AHP Scores}
+\begin{table}[H]
+\centering
+\caption{Final AHP Scores for LLM Selection}
+\begin{tabular}{lc}
+	{LLM} & \textbf{Final Score} \\
+\midrule
+GPT-5.2 & 7.62 \\
+GPT-4 Turbo & 7.54 \\
+Gemini 3 flash & \textbf{8.44} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Google Gemini 3 flash} is selected based on its superior AHP score. Key advantages include:
+\begin{itemize}
+    \item Team's extensive experience with Google Cloud Platform and Gemini API
+    \item Optimized for low-latency real-time conversational AI (critical for natural HRI)
+    \item Multimodal capabilities (text, image, audio) enabling future vision-based features
+    \item Native integration with Google Cloud services used in the project
+    \item Significantly lower cost enables extensive testing and development iterations
+    \item Announced Flash variant (Dec 2024) specifically designed for speed-critical applications
+\end{itemize}
+
+\subsubsection{System Selection Summary}
+\begin{table}[H]
+\centering
+\caption{Final System Component Selection Summary}
+\begin{tabular}{lll}
+\toprule
+\textbf{Component} & \textbf{Selected Option} & \textbf{AHP Score} \\
+\midrule
+Robot Platform & Hybrid (Commercial Base + Custom AI) & 6.76 \\
+Computing Platform & Raspberry Pi 5 (4GB) & 7.65 \\
+Navigation Approach & LiDAR-based SLAM (Nav2) & 7.95 \\
+Localization Sensors & LiDAR + Odometry + IMU & 8.20 \\
+LLM & Google Gemini 3 flash & 8.44 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Selected System Architecture}
+Based on the AHP analysis, the final system architecture combines:
+\begin{itemize}
+    \item \textbf{Robot Platform}: TurtleBot 4 or Yahboom ROS-MASTER X3 (commercial base)
+    \item \textbf{Main Computer}: Raspberry Pi 5 (4GB) running Ubuntu 22.04 + ROS~2 Humble
+    \item \textbf{Navigation}: Integrated RPLiDAR A1, MPU6050 IMU, wheel encoders
+    \item \textbf{Perception}: Pi Camera Module 3 + USB microphone array
+    \item \textbf{AI/LLM}: Google Gemini 3 flash via Cloud API
+    \item \textbf{Interface}: Custom Android tablet app with voice interaction
+    \item \textbf{Power}: Platform's Li-ion battery with automatic docking
+\end{itemize}
+
+\subsection{Functional Decomposition}
+
+\subsubsection{System Level 0: Black Box View}
+At the highest abstraction level, the smart healthcare robot can be represented as a single system with external interfaces. Figure~\ref{fig:level0-black-box} summarizes the Level~0 functional view, grouping the main inputs, outputs, and primary functions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{level0-functional-view-1765609410658.png}
+    \caption{System Level~0 black-box view of the smart healthcare robot, showing external inputs, outputs, and primary functions.}
+    \label{fig:level0-black-box}
+\end{figure}
+
+For clarity, the main interfaces can be described textually as follows:
+
+\begin{itemize}
+    \item \textbf{Inputs}:
+    \begin{itemize}
+        \item Voice commands from patients/staff
+        \item Touch input via tablet interface
+        \item Remote commands from web dashboard
+        \item Environmental sensor data (LiDAR scans, camera images)
+        \item Power from charging station
+    \end{itemize}
+    \item \textbf{Outputs}:
+    \begin{itemize}
+        \item Locomotion (movement through hospital environment)
+        \item Voice responses (text-to-speech)
+        \item Visual feedback (tablet display)
+        \item Telemetry data to monitoring systems
+        \item Physical item delivery
+    \end{itemize}
+    \item \textbf{Primary Functions}:
+    \begin{itemize}
+        \item Autonomous navigation and obstacle avoidance
+        \item Natural language interaction with users
+        \item Task execution (delivery, information provision, telepresence)
+        \item Status monitoring and reporting
+        \item Autonomous recharging
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{System Level 1: Subsystem Decomposition}
+The system is decomposed into seven major subsystems, each with defined responsibilities. Figure~\ref{fig:level1-subsystems} presents the Level~1 functional decomposition and the main interfaces between subsystems.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{level1-subsystem-decomposition-1765609443106.png}
+    \caption{System Level~1 subsystem decomposition of the smart healthcare robot, highlighting the seven functional subsystems and key data/control flows.}
+    \label{fig:level1-subsystems}
+\end{figure}
+
+The subsystems are defined textually as follows:
+
+\paragraph{1. Mobility Subsystem}
+\begin{itemize}
+    \item \textbf{Components}: 4WD mecanum base, DC motors, motor drivers, wheel encoders
+    \item \textbf{Functions}: Translate velocity commands to wheel motion, provide odometry feedback, execute emergency stops
+    \item \textbf{Interfaces}: Receives velocity commands from Navigation Subsystem, sends encoder data
+\end{itemize}
+
+\paragraph{2. Navigation Subsystem}
+\begin{itemize}
+    \item \textbf{Components}: RPLiDAR A1, MPU6050 IMU, ROS~2 Nav2 stack (SLAM, localization, path planning)
+    \item \textbf{Functions}: Build and update maps, localize robot pose, plan collision-free paths, detect obstacles
+    \item \textbf{Interfaces}: Receives goal poses from Task Manager, sends velocity commands to Mobility, provides pose estimates to all subsystems
+\end{itemize}
+
+\paragraph{3. Perception Subsystem}
+\begin{itemize}
+    \item \textbf{Components}: Pi Camera Module 3, microphone array, ultrasonic/ToF sensors
+    \item \textbf{Functions}: Capture visual data for teleoperation and docking, record audio for voice interaction, detect close-range obstacles
+    \item \textbf{Interfaces}: Sends camera frames to Interface Subsystem and Intelligence Subsystem, audio to Intelligence Subsystem, proximity alerts to Navigation Subsystem
+\end{itemize}
+
+\paragraph{4. Intelligence Subsystem}
+\begin{itemize}
+    \item \textbf{Components}: Gemini 3 flash API client, speech-to-text, text-to-speech, dialogue manager
+    \item \textbf{Functions}: Process natural language queries, generate contextual responses, manage conversation state, translate between voice and text
+    \item \textbf{Interfaces}: Receives audio from Perception, text commands from Interface, sends responses to Interface, task requests to Task Manager
+\end{itemize}
+
+\paragraph{5. Task Management Subsystem}
+\begin{itemize}
+    \item \textbf{Components}: Task scheduler, state machine, goal queue, hospital map database
+    \item \textbf{Functions}: Queue and prioritize tasks, track task execution status, coordinate between subsystems, manage waypoints and delivery locations
+    \item \textbf{Interfaces}: Receives task requests from Intelligence and Interface, sends navigation goals to Navigation, status updates to Interface
+\end{itemize}
+
+\paragraph{6. Interface and Communication Subsystem}
+\begin{itemize}
+    \item \textbf{Components}: Android tablet app, Flask web dashboard, ROS~2 bridge, Wi-Fi module
+    \item \textbf{Functions}: Display status and controls, enable touch/voice input, provide remote monitoring, transmit telemetry, receive remote commands
+    \item \textbf{Interfaces}: Bidirectional communication with all subsystems, external network connection to web dashboard and cloud services
+\end{itemize}
+
+\paragraph{7. Power Management Subsystem}
+\begin{itemize}
+    \item \textbf{Components}: 12V Li-ion battery, BMS, DC--DC converters, docking contacts, charging station
+    \item \textbf{Functions}: Distribute power to all subsystems, monitor battery status, initiate autonomous docking when low, manage charging process
+    \item \textbf{Interfaces}: Provides power to all subsystems, sends battery status to Task Management and Interface, receives docking commands from Task Management
+\end{itemize}
+
+\paragraph{Subsystem Interaction Flow}
+As summarized in Figure~\ref{fig:level1-subsystems}, the robot operates in a closed loop of sensing, decision-making, and actuation. The Perception subsystem collects sensor data and forwards it to Navigation for localisation and path planning, while also sending audio and video streams to the Intelligence subsystem. Intelligence interprets user intent and generates high-level task requests, which are queued and coordinated by Task Management. Task Management issues navigation goals to Navigation, which computes velocity commands for the Mobility subsystem and receives odometry feedback in return. Interface and Communication exposes task requests, status information, and telemetry to users and remote dashboards, while Power Management responds to dock/charge commands and reports battery status to both Task Management and the interface layer. This interaction pattern ensures that environmental sensing, user intent, motion control, and power management remain synchronised during hospital missions.
+
+\subsection{Conclusion}
+This chapter presented a systematic approach to the conceptual design of the smart healthcare robot. Through AHP-based evaluation of three platform alternatives (commercial, custom-built, and hybrid), the hybrid approach was selected as it balances reliability with customizability for healthcare-specific AI features. A second AHP analysis selected Google Gemini 3 flash as the optimal LLM for conversational AI due to team familiarity, low latency, and cost-effectiveness.
+
+The resulting system architecture is decomposed into seven functional subsystems (Mobility, Navigation, Perception, Intelligence, Task Management, Interface, and Power Management), each with clearly defined responsibilities and interfaces. This modular design enables parallel development, facilitates testing and validation, and provides a clear path for future enhancements such as manipulation capabilities or multi-robot coordination.
+
+The selected architecture provides a solid foundation for the detailed design and implementation phases that follow, ensuring the robot meets the project objectives of safe autonomous operation, natural human--robot interaction, and practical deployment in Omani hospitals.
+
+\clearpage

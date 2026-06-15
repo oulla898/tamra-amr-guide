@@ -1,0 +1,15 @@
+ipAssignment
+STATIC
+linkAddress
+192.168.20.100/24
+gateway
+0.0.0.0
+dns
+8.8.8.8
+dns
+8.8.4.4
+proxySettings
+NONE
+id
+eth0
+eos

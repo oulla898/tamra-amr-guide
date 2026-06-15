@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tamra — Guide</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='52'%3E🤖%3C/text%3E%3C/svg%3E" />
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --panel: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #666;
+    --rule: #e5e5e0;
+    --accent: #8b5a2b;
+    --code-bg: #f4f3ef;
+    --max: 760px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; line-height: 1.6; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+  code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 1em; border-radius: 6px; overflow-x: auto; }
+  pre code { background: transparent; padding: 0; }
+  table { border-collapse: collapse; margin: 1em 0; width: 100%; }
+  th, td { border-bottom: 1px solid var(--rule); padding: 0.5em 0.8em; text-align: left; vertical-align: top; }
+  th { font-weight: 600; background: var(--code-bg); }
+  blockquote { border-left: 3px solid var(--accent); margin: 1em 0; padding: 0.2em 1em; color: var(--muted); background: var(--code-bg); }
+  hr { border: none; border-top: 1px solid var(--rule); margin: 2em 0; }
+  img { max-width: 100%; height: auto; }
+  h1, h2, h3 { line-height: 1.25; }
+  h1 { margin-top: 0; font-size: 2em; }
+  h2 { margin-top: 1.5em; font-size: 1.4em; border-bottom: 1px solid var(--rule); padding-bottom: 0.3em; }
+  h3 { margin-top: 1.3em; font-size: 1.1em; }
+
+  /* Layout */
+  .wrap { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+  aside {
+    background: var(--panel);
+    border-right: 1px solid var(--rule);
+    padding: 1.5em 1.2em;
+    position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto;
+  }
+  aside .brand { font-weight: 700; font-size: 1.1em; margin-bottom: 0.2em; }
+  aside .sub { color: var(--muted); font-size: 0.85em; margin-bottom: 1.5em; }
+  aside nav ol { list-style: none; padding: 0; margin: 0; }
+  aside nav li { margin: 0.3em 0; }
+  aside nav a {
+    display: block; padding: 0.4em 0.6em; border-radius: 4px;
+    color: var(--ink); font-size: 0.95em;
+  }
+  aside nav a:hover { background: var(--code-bg); text-decoration: none; }
+  aside nav a.active { background: var(--accent); color: white; font-weight: 500; }
+  aside .num { color: var(--muted); font-size: 0.8em; margin-right: 0.4em; }
+  aside nav a.active .num { color: rgba(255,255,255,0.7); }
+
+  aside .section { margin-top: 1.5em; font-size: 0.8em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  aside .links a { display: block; padding: 0.3em 0.6em; font-size: 0.9em; }
+
+  main { padding: 2.5em 3em; max-width: 100%; overflow-x: hidden; }
+  article { max-width: var(--max); margin: 0 auto; }
+
+  .pager { display: flex; justify-content: space-between; margin-top: 3em; padding-top: 1.5em; border-top: 1px solid var(--rule); }
+  .pager a { padding: 0.5em 0.8em; border: 1px solid var(--rule); border-radius: 4px; background: var(--panel); }
+  .pager a:hover { background: var(--code-bg); text-decoration: none; }
+  .pager .empty { visibility: hidden; }
+
+  .hamburger {
+    display: none; position: fixed; top: 0.8em; right: 0.8em; z-index: 100;
+    background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+    padding: 0.5em 0.7em; cursor: pointer; font-size: 1.1em;
+  }
+
+  @media (max-width: 800px) {
+    .wrap { grid-template-columns: 1fr; }
+    aside {
+      position: fixed; left: 0; right: 0; top: 0; bottom: 0; max-height: 100vh;
+      transform: translateX(-100%); transition: transform 0.2s;
+      z-index: 90; width: 100%;
+    }
+    aside.open { transform: translateX(0); }
+    main { padding: 4em 1em 2em; }
+    .hamburger { display: block; }
+  }
+
+  /* loading */
+  .loading { color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<button class="hamburger" id="ham">☰</button>
+<div class="wrap">
+  <aside id="side">
+    <div class="brand">Tamra (تمرة)</div>
+    <div class="sub">Service AMR · SQU FYP</div>
+
+    <nav>
+      <ol id="nav"></ol>
+    </nav>
+
+    <div class="section">Quick links</div>
+    <div class="links">
+      <a href="assets/apk/DeploymentTool.apk" download>📱 Vendor APK</a>
+      <a href="report/main.pdf" target="_blank">📄 FYP Report (PDF)</a>
+      <a href="https://www.youtube.com/watch?v=H_J-rPhog4M" target="_blank">▶ 13-min walkthrough</a>
+      <a href="assets/manuals/iMRP500_user_manual.pdf" target="_blank">📘 iMRP500 Manual</a>
+      <a href="assets/manuals/upper_computer_protocol_translated.pdf" target="_blank">📗 Protocol (EN)</a>
+      <a href="assets/notes/reverse-engineering.md">🔧 Reverse-eng notes</a>
+    </div>
+
+    <div class="section">Source</div>
+    <div class="links">
+      <a href="https://github.com/oulla898/tamra-amr-project" target="_blank">GitHub</a>
+    </div>
+  </aside>
+
+  <main>
+    <article id="content"><p class="loading">Loading…</p></article>
+    <div class="pager" id="pager"></div>
+  </main>
+</div>
+
+<script>
+  const PAGES = [
+    { id: 'readme',    file: 'README.md',                  label: 'Overview',              num: '' },
+    { id: 'quickstart',file: '01-quick-start.md',          label: 'Quick Start',           num: '1' },
+    { id: 'robot',     file: '02-meet-the-robot.md',       label: 'Meet the Robot',        num: '2' },
+    { id: 'poweron',   file: '03-first-power-on.md',       label: 'First Power-On',        num: '3' },
+    { id: 'mapping',   file: '04-mapping-and-waypoints.md',label: 'Mapping & Waypoints',   num: '4' },
+    { id: 'network',   file: '05-tablet-and-network.md',   label: 'Tablet & Network',      num: '5' },
+    { id: 'software',  file: '06-our-software.md',         label: 'Our Software',          num: '6' },
+    { id: 'api',       file: '07-talking-to-the-robot.md', label: 'Talking to the Robot',  num: '7' },
+    { id: 'videos',    file: '08-videos.md',               label: 'Videos',                num: '8' },
+    { id: 'refs',      file: '09-references.md',           label: 'References & Files',    num: '9' },
+  ];
+
+  // Slugify headings so in-page anchors like #walkthrough work.
+  function slug(text) {
+    return String(text).toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .trim().replace(/\s+/g, '-');
+  }
+  const renderer = new marked.Renderer();
+  renderer.heading = function(text, level) {
+    const id = slug(text);
+    return `<h${level} id="${id}">${text}</h${level}>`;
+  };
+
+  marked.setOptions({
+    gfm: true, breaks: false,
+    renderer: renderer,
+    highlight: function(code, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try { return hljs.highlight(code, { language: lang }).value; } catch (_) {}
+      }
+      return hljs.highlightAuto(code).value;
+    }
+  });
+
+  function buildNav() {
+    const nav = document.getElementById('nav');
+    nav.innerHTML = PAGES.map(p =>
+      `<li><a href="#${p.id}" data-id="${p.id}">` +
+      (p.num ? `<span class="num">${p.num}.</span>` : '') + p.label +
+      `</a></li>`
+    ).join('');
+  }
+
+  function pageById(id) { return PAGES.find(p => p.id === id) || PAGES[0]; }
+
+  // Parse the hash into { id, anchor }. Supports "#id" and "#id::anchor".
+  function parseHash() {
+    const raw = (location.hash || '#readme').slice(1);
+    const [id, anchor] = raw.split('::');
+    return { id: id || 'readme', anchor: anchor || '' };
+  }
+
+  function rewriteLinks(html, baseFile) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    tmp.querySelectorAll('a').forEach(a => {
+      const href = a.getAttribute('href') || '';
+      if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
+
+      // Pure in-page anchor: leave it
+      if (href.startsWith('#')) return;
+
+      // Split off fragment so .md links with #anchor still match
+      const hashIdx = href.indexOf('#');
+      const path = hashIdx >= 0 ? href.slice(0, hashIdx) : href;
+      const frag = hashIdx >= 0 ? href.slice(hashIdx + 1) : '';
+
+      const match = PAGES.find(p => path.endsWith(p.file));
+      if (match) {
+        a.setAttribute('href', '#' + match.id + (frag ? '::' + frag : ''));
+        return;
+      }
+      // Out-of-list .md (e.g. reverse-engineering.md) — open raw in new tab
+      if (path.endsWith('.md')) {
+        a.setAttribute('target', '_blank');
+      }
+    });
+    return tmp.innerHTML;
+  }
+
+  async function loadPage(id, anchor) {
+    const page = pageById(id);
+    const content = document.getElementById('content');
+    content.innerHTML = '<p class="loading">Loading…</p>';
+
+    try {
+      const resp = await fetch(page.file);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const md = await resp.text();
+      content.innerHTML = rewriteLinks(marked.parse(md), page.file);
+      document.querySelectorAll('pre code').forEach(b => hljs.highlightElement(b));
+    } catch (e) {
+      content.innerHTML = `<h1>Couldn't load <code>${page.file}</code></h1><p>${e.message}</p>`;
+    }
+
+    document.querySelectorAll('#nav a').forEach(a => {
+      a.classList.toggle('active', a.dataset.id === id);
+    });
+
+    const i = PAGES.findIndex(p => p.id === id);
+    const prev = PAGES[i - 1], next = PAGES[i + 1];
+    document.getElementById('pager').innerHTML =
+      (prev ? `<a href="#${prev.id}">← ${prev.label}</a>` : '<span class="empty"></span>') +
+      (next ? `<a href="#${next.id}">${next.label} →</a>` : '<span class="empty"></span>');
+
+    // Scroll: to anchor if given, else top
+    if (anchor) {
+      const target = document.getElementById(anchor);
+      if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
+      else window.scrollTo(0, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
+    document.getElementById('side').classList.remove('open');
+    document.title = (page.id === 'readme' ? '' : page.label + ' — ') + 'Tamra Guide';
+  }
+
+  document.getElementById('ham').addEventListener('click', () => {
+    document.getElementById('side').classList.toggle('open');
+  });
+
+  function routeFromHash() {
+    const { id, anchor } = parseHash();
+    loadPage(id, anchor);
+  }
+  window.addEventListener('hashchange', routeFromHash);
+  buildNav();
+  routeFromHash();
+</script>
+</body>
+</html>

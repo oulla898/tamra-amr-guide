@@ -1,0 +1,8 @@
+# Android init service for dual network script
+# Location on tablet: /system/etc/init/dual_network.rc (via overlayfs)
+
+service dual_network /system/bin/sh /data/local/tmp/dual_network.sh
+    class late_start
+    user root
+    group root inet net_admin net_raw
+    seclabel u:r:shell:s0

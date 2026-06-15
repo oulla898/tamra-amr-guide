@@ -1,0 +1,345 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern}
+\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{titling}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{pgfgantt}
+\usepackage{tocloft}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{subcaption}
+\graphicspath{{figures/}}
+
+% Configure Table of Contents spacing
+\setlength{\cftbeforesecskip}{8pt}
+\setlength{\cftbeforesubsecskip}{4pt}
+
+% Configure hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=black,
+    pdfborder={0 0 0},
+    pdftitle={Smart Healthcare Robot},
+    pdfauthor={Almoulla Talal Almaawali, Abdulmunim Khamis Albusaidi}
+}
+
+% Configure page headers and footers (Academic Thesis Style)
+\pagestyle{fancy}
+\fancyhf{} % Clear all headers and footers
+\fancyhead[L]{\small\textit{\leftmark}} % Left side: Section name
+\fancyhead[R]{\small\textit{Smart Healthcare Robot}} % Right side: Document title
+\fancyfoot[C]{\thepage} % Page number centered in footer
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}} % Properly set section marks
+
+% Different style for chapter intro pages (no header, only page number)
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+% University Logo
+\includegraphics[width=0.75\textwidth]{squ-logo-new.png}\\[0.5cm]
+
+% University Header
+{\Large\textbf{SULTAN QABOOS UNIVERSITY}}\\[0.4cm]
+{\large College of Engineering}\\[0.3cm]
+{\large Department of Electrical and Computer Engineering}\\[0.2cm]
+
+\vspace{2cm}
+
+% Project Title
+{\Huge\textbf{Smart Healthcare Robot}}\\[0.8cm]
+{\LARGE Bringing Care Closer to Patients in Oman}
+
+\vspace{1.5cm}
+
+% Authors
+{\large\textbf{Almoulla Talal Almaawali \& Abdulmunim Khamis Albusaidi}}\\[0.3cm]
+{\normalsize 135591 \& 133225}
+
+\vspace{1cm}
+
+% Supervisor
+{\large\textbf{Supervisor:}}\\[0.3cm]
+{\large Ahmed Chehib Ammari}
+
+\vspace{1.5cm}
+
+% Degree Statement
+{\normalsize A Final Year Project Report submitted to the Department of}\\
+{\normalsize Electrical and Computer Engineering, Sultan Qaboos University}\\
+{\normalsize in partial fulfilment of the requirements for the Degree of}
+
+\vspace{0.5cm}
+
+{\large\textbf{BACHELOR OF ENGINEERING}}\\
+{\normalsize in}\\
+{\large\textbf{ELECTRICAL \& COMPUTER ENGINEERING}}
+
+\vfill
+
+% Date
+{\large Academic Year 2025--2026}\\[0.4cm]
+{\normalsize December 2025}
+
+\end{titlepage}
+
+% ============================================================
+% STUDENTS DECLARATION STATEMENT
+% ============================================================
+\newpage
+\thispagestyle{empty}
+\section*{Students Declaration Statement}
+\addcontentsline{toc}{section}{Students Declaration Statement}
+
+We certify that Mr. Almoulla Talal Almaawali (Student ID: 135591) and Mr. Abdulmunim Khamis Albusaidi (Student ID: 133225) that this project is our own work, based on our personal study and that we have acknowledged all material and sources used in its preparation, whether they be books, articles, reports, lecture notes, and any other kind of document, electronic or personal communication.
+
+We also certify that this report does not include any violation of anyone's copyrights or otherwise plagiarised the work of other persons.
+
+\vspace{2cm}
+
+\noindent
+\begin{tabular}{@{}p{0.4\textwidth}p{0.5\textwidth}@{}}
+. . . . . . . . . . . . . . . . . . . . . & . . . . . . . . . . . . . . . . . . . . . \\
+Date: December 13, 2025 & Students's Names \\
+& Almoulla Talal Almaawali \\
+& Abdulmunim Khamis Albusaidi
+\end{tabular}
+
+% ============================================================
+% DECLARATION OF AI USE
+% ============================================================
+\newpage
+\thispagestyle{empty}
+\section*{Declaration of Generative AI and AI-Assisted Technologies}
+\addcontentsline{toc}{section}{Declaration of AI Use}
+
+During the preparation of this work, the students Almoulla Talal Almaawali (Student ID: 135591) and Abdulmunim Khamis Albusaidi (Student ID: 133225) used generative AI tools including ChatGPT, Claude, and Google Gemini in order to assist with literature review synthesis, technical writing refinement, code documentation. After using these tools, the students reviewed and edited the content as needed and take full responsibility for the accuracy, integrity, and originality of the content presented in this Final Year Project report.
+
+% ============================================================
+% ABSTRACT
+% ============================================================
+\newpage
+\thispagestyle{empty}
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+This project develops a smart healthcare robot for Omani hospitals to assist medical staff with routine tasks. The robot uses ROS~2 for autonomous navigation, LiDAR-based SLAM for mapping, and Google Gemini 3 flash for natural language interaction. It can deliver items, guide patients, and provide information through a tablet interface.
+
+Three platform alternatives were evaluated using AHP decision matrices. A hybrid architecture was selected, combining a commercial robot base with custom AI layers. The system includes seven subsystems: Mobility, Navigation, Perception, Intelligence, Task Management, Interface, and Power Management. The design addresses healthcare workforce challenges while maintaining patient safety and ease of use.
+
+\vspace{0.5cm}
+\noindent\textbf{Keywords:} Healthcare Robotics, Autonomous Mobile Robots, ROS 2, LiDAR SLAM, Human--Robot Interaction, Large Language Models
+
+% ============================================================
+% GRAPHICAL ABSTRACT
+% ============================================================
+\newpage
+\thispagestyle{empty}
+\section*{Graphical Abstract}
+\addcontentsline{toc}{section}{Graphical Abstract}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{visual-abstract-1765608906756.png}
+    \caption*{Graphical abstract of the proposed autonomous mobile robot for hospital logistics and its evidence-based benefits in clinical environments.}
+\end{figure}
+
+% ============================================================
+% ACKNOWLEDGEMENT
+% ============================================================
+\newpage
+\thispagestyle{empty}
+\section*{Acknowledgement}
+\addcontentsline{toc}{section}{Acknowledgement}
+
+We acknowledge our supervisor, Dr. Ahmed Chehib Ammari, for his guidance throughout this project.
+
+We thank the Department of Electrical and Computer Engineering at Sultan Qaboos University for providing the necessary facilities and resources.
+
+% ============================================================
+% ACRONYMS
+% ============================================================
+\newpage
+\thispagestyle{empty}
+\section*{Acronyms}
+\addcontentsline{toc}{section}{Acronyms}
+
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Acronym} & \textbf{Description} \\
+\midrule
+AHP & Analytic Hierarchy Process \\
+AI & Artificial Intelligence \\
+AMR & Autonomous Mobile Robot \\
+API & Application Programming Interface \\
+BMS & Battery Management System \\
+EHR & Electronic Health Record \\
+GDPR & General Data Protection Regulation \\
+HIPAA & Health Insurance Portability and Accountability Act \\
+HIS & Hospital Information System \\
+HRI & Human--Robot Interaction \\
+IMU & Inertial Measurement Unit \\
+LiDAR & Light Detection and Ranging \\
+LLM & Large Language Model \\
+ROS & Robot Operating System \\
+SLAM & Simultaneous Localization and Mapping \\
+ToF & Time of Flight \\
+UWB & Ultra-Wideband \\
+WBS & Work Breakdown Structure \\
+\bottomrule
+\end{tabular}
+
+% ============================================================
+% TABLE OF CONTENTS
+% ============================================================
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================
+% LIST OF FIGURES
+% ============================================================
+\listoffigures
+\newpage
+
+% ============================================================
+% LIST OF TABLES
+% ============================================================
+\listoftables
+\newpage
+
+% ============================================================
+% MAIN CONTENT
+% ============================================================
+\setcounter{page}{1}
+
+% Chapter intro page macro (book-like divider)
+\newcommand{\chapterintro}[3]{%
+\clearpage
+\thispagestyle{empty}%
+\vspace*{2cm}%
+\begin{center}
+    {\fontsize{72}{72}\selectfont \textbf{#1}}\\[0.6cm]
+    {\LARGE\bfseries #2}\\[0.6cm]
+    \rule{0.75\textwidth}{0.6pt}\\[0.6cm]
+    \parbox{0.75\textwidth}{\large #3}
+\end{center}
+\vfill
+\clearpage
+}
+
+% Chapter 1: Introduction
+\chapterintro{1}{Introduction}{This chapter establishes the project context, problem statement, motivation, objectives, methodology overview, and the project management plan that frames execution for the rest of the report.}
+\section{Introduction}
+\label{sec:introduction}
+
+\subsection{Project Context}
+\input{sections/01-project-context.tex}
+
+\subsection{Problem Statement}
+\input{sections/02-problem-statement.tex}
+
+\subsection{Motivation}
+\input{sections/03-motivation.tex}
+
+\subsection{Objectives}
+\input{sections/04-objectives.tex}
+
+\subsection{Methodology}
+\input{sections/05-methodology.tex}
+
+\subsection{Project Management Plan}
+\input{sections/06-project-management-plan.tex}
+
+% Chapter 2: Literature Review
+\chapterintro{2}{Literature Review}{This chapter surveys consumer, industrial, and healthcare robotics; documents benefits and challenges of AMRs in hospitals; analyzes core technologies (navigation, RF localization, SLAM, LLMs); and motivates the platform choices and project needs.}
+\section{Literature Review}
+\label{sec:literature-review}
+\input{sections/08-relevant-literature-review.tex}
+
+% Chapter 3: Requirements Specifications
+\chapterintro{3}{Requirements Specifications}{This chapter defines customer and engineering requirements for the smart healthcare robot, establishing quantifiable specifications for navigation, telepresence, AI interaction, power management, and safety that guide system design and validation.}
+\section{Requirements Specifications}
+\label{sec:requirements}
+\input{sections/10-requirement-specification.tex}
+
+% Chapter 4: System Conceptual Design
+\chapterintro{4}{System Conceptual Design}{This chapter presents the high-level system architecture of the smart healthcare robot, including functional decomposition, design alternatives analysis using AHP methodology, hardware and software selection justification, and detailed subsystem specifications.}
+\section{System Conceptual Design}
+\label{sec:design}
+\input{sections/09-system-conceptual-design.tex}
+
+% Chapter 5: System Implementation
+\chapterintro{5}{System Implementation: Results and Discussion}{This chapter documents the hardware commissioning, body shell fabrication, software development, and system integration of TAMRA. It covers the platform transition rationale, iMRP500 reverse engineering, dual-network tablet solution, semantic task orchestrator, and measured validation results.}
+\section{System Implementation: Results and Discussion}
+\label{sec:implementation}
+\input{sections/12-system-implementation.tex}
+
+% Chapter 6: Conclusions and Future Works
+\chapterintro{6}{Conclusions and Future Works}{This chapter summarises the engineering contributions of the project, identifies areas for improvement, and outlines future development directions toward full-scale service robot deployment.}
+\section{Conclusions and Future Works}
+\label{sec:conclusion}
+\input{sections/13-conclusions.tex}
+
+% ============================================================
+% REFERENCES
+% ============================================================
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{references/references}
+
+% ============================================================
+% APPENDICES
+% ============================================================
+\newpage
+\appendix
+\section{Appendix: Standards and Regulatory References}
+\label{sec:appendix}
+
+\subsection{ISO Standards}
+This project references the following international safety and technical standards:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{ISO 13482:2014} -- Robots and robotic devices -- Safety requirements for personal care robots \\
+    \url{https://www.iso.org/standard/53820.html}
+    
+    
+    \item \textbf{ISO 13850:2015} -- Safety of machinery -- Emergency stop function -- Principles for design \\
+    \url{https://www.iso.org/standard/59970.html}
+\end{itemize}
+
+\subsection{Data Protection and Privacy Regulations}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{GDPR (General Data Protection Regulation)} -- Regulation (EU) 2016/679 of the European Parliament and of the Council on the protection of natural persons with regard to the processing of personal data \\
+    \url{https://eur-lex.europa.eu/eli/reg/2016/679/oj}
+    
+    \item \textbf{HIPAA (Health Insurance Portability and Accountability Act)} -- U.S. Department of Health \& Human Services regulations for protecting sensitive patient health information \\
+    \url{https://www.hhs.gov/hipaa/index.html}
+\end{itemize}
+
+\end{document}
