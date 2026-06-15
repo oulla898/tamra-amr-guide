@@ -19,6 +19,22 @@ For tablet work, also grab the [tablet spec](assets/manuals/tablet-spec.docx). E
 
 Every page has a **📋 Copy page** button (top-right) that puts the raw markdown on your clipboard, ready to paste into an agent.
 
+## ▶ Watch this first — 13-minute walkthrough
+
+The single best thing for anyone new to the robot. Covers power-on, cables, tablet, apps, shutdown — all of it.
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 1em 0;">
+  <iframe
+    src="https://www.youtube.com/embed/H_J-rPhog4M"
+    title="TAMRA — 13-minute walkthrough"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 6px;"></iframe>
+</div>
+
+Direct link: <https://www.youtube.com/watch?v=H_J-rPhog4M>
+
 ## Read in order (for humans)
 
 | # | Page | |
@@ -32,10 +48,6 @@ Every page has a **📋 Copy page** button (top-right) that puts the raw markdow
 | 7 | [Talking to the Robot](07-talking-to-the-robot.md) | rosbridge — topics, services, snippets |
 | 8 | [Videos](08-videos.md) | 13-min walkthrough + vendor clips |
 | 9 | [References & Files](09-references.md) | Index of every file |
-
-## Walkthrough
-
-A 13-minute video covering everything you need to operate the robot: <https://www.youtube.com/watch?v=H_J-rPhog4M>
 
 ## Safety
 

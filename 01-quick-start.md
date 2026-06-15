@@ -12,7 +12,10 @@ End state: a saved map and a few waypoints the robot can drive to.
 
 Press the ** ON button at LiDAR level on the chassis**. Wait ~30 s.
 
-Full sequence: [First Power-On](03-first-power-on.md). Full visual: [walkthrough video](08-videos.md#walkthrough).
+Full sequence: [First Power-On](03-first-power-on.md).
+
+> ### ▶ [Watch the 13-minute walkthrough first](08-videos.md)
+> Seriously — every button, cable, and tablet screen is in that video. Most questions disappear after watching it.
 
 ## 2. Install the vendor app
 
