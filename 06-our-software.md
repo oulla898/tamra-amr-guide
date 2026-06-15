@@ -3,8 +3,8 @@
 | Piece | Where | What | Code |
 |---|---|---|---|
 | **Tablet UI** | On-board tablet, Fully Kiosk | Face + dashboard, one HTML file | [`assets/software/robot-ui.html`](assets/software/robot-ui.html) |
-| **Remote dashboard** | Laptop browser | Task scheduler, video, voice, MQTT control | [`../../software/`](../../software/) (Vite + React 19 + TS) |
-| **Boot daemon** | Tablet, Android init | Dual-network ([Tablet & Network](05-tablet-and-network.md)) | [`assets/tablet-network/`](assets/tablet-network/) |
+| **Remote dashboard** | Laptop browser | Task scheduler, video, voice, MQTT control | `software/` in main project repo (Vite + React 19 + TS) |
+| **Boot daemon** | Tablet, Android init | Dual-network ([Tablet & Network](05-tablet-and-network.md)) | [`assets/tablet-network/`](https://github.com/oulla898/tamra-amr-guide/tree/main/assets/tablet-network) |
 
 ## Tablet UI — `robot-ui.html`
 
@@ -24,7 +24,7 @@ Notes: tablet is only 2 GB RAM, keep it lean. MQTT connect on eduroam takes 10�
 
 ## Remote dashboard — React
 
-Vite + React 19 + TypeScript at [`../../software/`](../../software/). Entry: [`../../software/App.tsx`](../../software/App.tsx).
+Vite + React 19 + TypeScript. Lives in the main project repo (`software/App.tsx` entry). Not duplicated in this public guide.
 
 Pages: Dashboard (task scheduler), Communication (Daily.co video), Interactive AI (LLM chat), Admin, Orders.
 
@@ -33,7 +33,7 @@ Deps: `@google/genai`, `@elevenlabs/react`, `@daily-co/daily-js`, `mqtt`, `socke
 Run:
 
 ```powershell
-cd ../../software
+cd software   # in the main project repo
 npm install
 # GEMINI_API_KEY in .env.local
 npm run dev

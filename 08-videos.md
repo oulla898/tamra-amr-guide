@@ -8,7 +8,7 @@
 
 ## Vendor clips
 
-In [`assets/videos/`](assets/videos/). Short demos from NeoChassis, no commentary.
+In [`assets/videos/`](https://github.com/oulla898/tamra-amr-guide/tree/main/assets/videos). Short demos from NeoChassis, no commentary.
 
 - [`10fcd59bdba52709a37568b11246ea1c.mp4`](assets/videos/10fcd59bdba52709a37568b11246ea1c.mp4)
 - [`6000319008801.mp4`](assets/videos/6000319008801.mp4)

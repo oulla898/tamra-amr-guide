@@ -6,8 +6,6 @@
 <title>Tamra — Guide</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='52'%3E🤖%3C/text%3E%3C/svg%3E" />
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
 <style>
   :root {
     --bg: #fafaf7;
@@ -25,8 +23,8 @@
   a:hover { text-decoration: underline; }
   code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
   code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 3px; }
-  pre { background: var(--code-bg); padding: 1em; border-radius: 6px; overflow-x: auto; }
-  pre code { background: transparent; padding: 0; }
+  pre { background: var(--code-bg); padding: 1em; border-radius: 6px; overflow-x: auto; border: 1px solid var(--rule); }
+  pre code { background: transparent; padding: 0; color: #24292e; }
   table { border-collapse: collapse; margin: 1em 0; width: 100%; }
   th, td { border-bottom: 1px solid var(--rule); padding: 0.5em 0.8em; text-align: left; vertical-align: top; }
   th { font-weight: 600; background: var(--code-bg); }
@@ -115,7 +113,7 @@
 
     <div class="section">Source</div>
     <div class="links">
-      <a href="https://github.com/oulla898/tamra-amr-project" target="_blank">GitHub</a>
+      <a href="https://github.com/oulla898/tamra-amr-guide" target="_blank">GitHub</a>
     </div>
   </aside>
 
@@ -153,13 +151,7 @@
 
   marked.setOptions({
     gfm: true, breaks: false,
-    renderer: renderer,
-    highlight: function(code, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        try { return hljs.highlight(code, { language: lang }).value; } catch (_) {}
-      }
-      return hljs.highlightAuto(code).value;
-    }
+    renderer: renderer
   });
 
   function buildNav() {
@@ -218,7 +210,6 @@
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       const md = await resp.text();
       content.innerHTML = rewriteLinks(marked.parse(md), page.file);
-      document.querySelectorAll('pre code').forEach(b => hljs.highlightElement(b));
     } catch (e) {
       content.innerHTML = `<h1>Couldn't load <code>${page.file}</code></h1><p>${e.message}</p>`;
     }

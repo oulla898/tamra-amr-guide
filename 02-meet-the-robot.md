@@ -1,6 +1,6 @@
 # Meet the Robot
 
-Dimensions drawing: [`assets/renders/engineering-drawing.png`](assets/renders/engineering-drawing.png). Renders: [`assets/renders/`](assets/renders/).
+Dimensions drawing: [`assets/renders/engineering-drawing.png`](assets/renders/engineering-drawing.png). All renders: [`assets/renders/`](https://github.com/oulla898/tamra-amr-guide/tree/main/assets/renders).
 
 ## Specs
 

@@ -1,16 +1,16 @@
 # References & Files
 
-Everything inside `assets/` and `report/` lives in this guide folder — share the folder, share the docs.
+Everything inside `assets/` and `report/` lives in this guide — share the folder, share the docs. Directory listings are linked to GitHub since the live site can't auto-list folders.
 
 ## FYP report
 
-Full LaTeX source and compiled PDF embedded in [`report/`](report/).
+Full LaTeX source and compiled PDF embedded in [`report/`](https://github.com/oulla898/tamra-amr-guide/tree/main/report).
 
 - [`report/main.pdf`](report/main.pdf) — compiled report
 - [`report/main.tex`](report/main.tex) — root LaTeX file
-- [`report/sections/`](report/sections/) — per-chapter sources
-- [`report/figures/`](report/figures/) — figures used in the report
-- [`report/references/`](report/references/), [`report/bib/`](report/bib/) — bibliography
+- [`report/sections/`](https://github.com/oulla898/tamra-amr-guide/tree/main/report/sections) — per-chapter sources
+- [`report/figures/`](https://github.com/oulla898/tamra-amr-guide/tree/main/report/figures) — figures used in the report
+- [`report/references/`](https://github.com/oulla898/tamra-amr-guide/tree/main/report/references), [`report/bib/`](https://github.com/oulla898/tamra-amr-guide/tree/main/report/bib) — bibliography
 
 Chapters:
 
@@ -47,7 +47,7 @@ Chapters:
 - [`robot-ui.html`](assets/software/robot-ui.html) — tablet app
 - [`TABLET_HANDOFF.md`](assets/software/TABLET_HANDOFF.md) — ADB cheat sheet
 
-The React dashboard is large and lives in the repo at [`../../software/`](../../software/) — not duplicated here.
+The React dashboard is large and lives in the main project repo's `software/` folder — not duplicated here.
 
 ## Renders — `assets/renders/`
 
@@ -57,8 +57,8 @@ The React dashboard is large and lives in the repo at [`../../software/`](../../
 - [`viewing-angle.png`](assets/renders/viewing-angle.png) — 40° tilt justification
 - [`acrylic-dimensions.png`](assets/renders/acrylic-dimensions.png) — acrylic cut sheet
 
-Full 3D source (Fusion 360 `.f3z`, STEP, meshes — 361 MB) is too large to embed; lives at [`../../hardware/3d-models/`](../../hardware/3d-models/).
+Full 3D source (Fusion 360 `.f3z`, STEP, meshes — 361 MB) is too large to embed; lives in the main project repo's `hardware/3d-models/` folder.
 
 ## Videos
 
-The 13-min walkthrough is on YouTube: <https://www.youtube.com/watch?v=H_J-rPhog4M>. Vendor clips are embedded in [`assets/videos/`](assets/videos/). See [Videos](08-videos.md).
+The 13-min walkthrough is on YouTube: <https://www.youtube.com/watch?v=H_J-rPhog4M>. Vendor clips are at [`assets/videos/`](https://github.com/oulla898/tamra-amr-guide/tree/main/assets/videos). See [Videos](08-videos.md).
