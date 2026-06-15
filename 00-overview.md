@@ -49,6 +49,46 @@ Direct link: <https://www.youtube.com/watch?v=H_J-rPhog4M>
 | 8 | [Videos](08-videos.md) | 13-min walkthrough + vendor clips |
 | 9 | [References & Files](09-references.md) | Index of every file |
 
+## Repository structure
+
+```
+tamra-amr-guide/
+├── README.md                ← this file (also the landing page on the live site)
+├── index.html               ← static site shell — renders the .md files
+├── vercel.json              ← Vercel config (asset caching)
+├── DEPLOY.md                ← how to deploy this folder
+│
+├── 00-overview.md           ← duplicate of README.md (served by Vercel)
+├── 01-quick-start.md        ← 15-min hands-on path
+├── 02-meet-the-robot.md     ← physical tour
+├── 03-first-power-on.md     ← exact start sequence
+├── 04-mapping-and-waypoints.md  ← vendor DeploymentTool workflow
+├── 05-tablet-and-network.md ← dual-network, ADB, laptop ↔ robot
+├── 06-our-software.md       ← tablet HTML app + React dashboard
+├── 07-talking-to-the-robot.md   ← rosbridge API
+├── 08-videos.md             ← embedded walkthrough + vendor clips
+├── 09-references.md         ← index of every file in assets/ and report/
+│
+├── assets/                  ← everything the docs link to
+│   ├── apk/                 ← DeploymentTool.apk (vendor mapping/teleop app)
+│   ├── manuals/             ← protocol PDFs, datasheet, tablet specs
+│   ├── notes/               ← reverse-engineering.md, protocol-analysis-log.md
+│   ├── renders/             ← engineering drawing + body renders (PNG)
+│   ├── software/            ← robot-ui.html (tablet app), TABLET_HANDOFF.md
+│   ├── tablet-network/      ← dual_network.sh + Android init service
+│   └── videos/              ← 5 vendor demo clips (the 13-min walkthrough is on YouTube)
+│
+└── report/                  ← FYP report — full LaTeX source + compiled PDF
+    ├── main.tex             ← root LaTeX file
+    ├── main.pdf             ← compiled report
+    ├── sections/            ← per-chapter .tex sources
+    ├── figures/             ← report figures
+    ├── references/          ← bibliography .tex
+    └── bib/                 ← .bib file
+```
+
+The **main project repo** (private, `oulla898/tamra-amr-project`) holds the React dashboard source, hardware-experiment scripts, 3D model sources (`.f3z`, STEP, meshes), and presentations — anything too large or too in-progress for this public guide.
+
 ## Safety
 
 The kill switch is the big red button on the back of the body. Press it → wheels go free, robot is pushable. Press again to re-arm.
