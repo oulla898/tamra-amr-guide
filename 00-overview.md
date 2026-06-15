@@ -1,7 +1,5 @@
 # Tamra — Guide
 
-> 🌐 **Live site:** <https://tamra-docs.vercel.app>
-
 A short, hands-on guide to **Tamra (تمرة)**, an autonomous service robot built on the iMRP500 chassis.
 
 This folder is self-contained. The 13-min walkthrough is on YouTube: <https://www.youtube.com/watch?v=H_J-rPhog4M>. Every other file (vendor app, manuals, notes, scripts, renders, report) lives inside `assets/` or `report/`.
